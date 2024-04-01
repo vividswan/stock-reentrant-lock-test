@@ -1,6 +1,7 @@
 package com.vividswan.reentrantlock.infra.product
 
-import com.vividswan.reentrantlock.domain.product.ProductRepository
+import org.springframework.stereotype.Repository
 
-class ProductMySqlImpl : ProductRepository {
+@Repository
+class ProductMySqlImpl(private val productMySqlJpaRepository: ProductMySqlJpaRepository) {
 }

@@ -1,5 +1,6 @@
 package com.vividswan.reentrantlock.infra.product
 
+import com.vividswan.reentrantlock.domain.product.Product
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
@@ -11,4 +12,10 @@ class ProductEntity(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long,
     var stock: Int = 0
-)
+) {
+    companion object {
+        fun toDomain(entity: ProductEntity): Product {
+            return Product(id = entity.id, stock = entity.stock)
+        }
+    }
+}

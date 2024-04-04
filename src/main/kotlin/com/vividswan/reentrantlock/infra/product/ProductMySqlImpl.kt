@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository
 class ProductMySqlImpl(private val jpaRepository: ProductMySqlJpaRepository) {
     fun findById(id: Long): Product {
         val productEntity = jpaRepository.findById(id).orElseThrow {
-            EntityNotFoundException("Product with id $id not found")
+            EntityNotFoundException("Product with id $id not found!")
         }
 
         return ProductEntity.toDomain(productEntity)

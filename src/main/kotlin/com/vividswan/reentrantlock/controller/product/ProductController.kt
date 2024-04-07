@@ -1,32 +1,32 @@
 package com.vividswan.reentrantlock.controller.product
 
+import com.vividswan.reentrantlock.domain.product.ProductService
 import org.springframework.web.bind.annotation.*
 
 @RequestMapping("/v1/products")
 @RestController
-class ProductController {
+class ProductController(private val productService: ProductService) {
 
     @GetMapping("/{id}")
     fun getProduct(@PathVariable id: Long): ProductDto {
-        // TODO: 서비스단 로직 등록 필요
-        return ProductDto(0, 0)
+        return productService.getProduct(id)
     }
 
     @PostMapping("/")
     fun createProduct(): CommonResponseDto {
-        // TODO: 서비스단 로직 등록 필요
+        productService.createProduct()
         return CommonResponseDto(isSuccess = true, message = "상품 등록 성공")
     }
 
     @PatchMapping("/{id}/{stock}")
-    fun setProductStock(@PathVariable id: Long, @PathVariable stock: Int): CommonResponseDto {
-        // TODO: 서비스단 로직 등록 필요
-        return CommonResponseDto(isSuccess = true, message = "재고 등록 성공")
+    fun updateProductStock(@PathVariable id: Long, @PathVariable stock: Int): DataResponseDto<ProductDto> {
+        val updatedProduct = productService.updateProductStock(id, stock)
+        return DataResponseDto(isSuccess = true, message = "재고 등록 성공", updatedProduct)
     }
 
     @PostMapping("/adjustments")
     fun decreaseProductStock(@RequestBody productDto: ProductDto): CommonResponseDto {
-        // TODO: 서비스단 로직 등록 필요
+        productService.decreaseProductStock(productDto)
         return CommonResponseDto(isSuccess = true, message = "재고 감소 성공")
     }
 }

@@ -4,7 +4,7 @@ import com.vividswan.reentrantlock.controller.product.ProductDto
 import org.springframework.stereotype.Service
 
 @Service
-class ProductService {
+class ProductService(private val productRepository: ProductRepository) {
     fun getProduct(id: Long): ProductDto {
         // TODO: 인프라단 로직 등록 필요
         return ProductDto(0, 0)

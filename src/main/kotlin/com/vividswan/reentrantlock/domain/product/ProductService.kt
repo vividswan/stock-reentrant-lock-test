@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service
 @Service
 class ProductService(private val productRepository: ProductRepository) {
     fun getProduct(id: Long): ProductDto {
-        // TODO: 인프라단 로직 등록 필요
-        return ProductDto(0, 0)
+        val findProduct = productRepository.findById(id);
+        return ProductDto.fromDomain(findProduct)
     }
 
     fun createProduct() {

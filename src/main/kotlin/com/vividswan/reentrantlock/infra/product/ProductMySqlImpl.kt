@@ -14,4 +14,10 @@ class ProductMySqlImpl(private val jpaRepository: ProductMySqlJpaRepository) : P
 
         return ProductEntity.toDomain(productEntity)
     }
+
+    override fun save(domain: Product): Product {
+        val productEntity = jpaRepository.save(ProductEntity.fromDomain(domain))
+
+        return ProductEntity.toDomain(productEntity)
+    }
 }

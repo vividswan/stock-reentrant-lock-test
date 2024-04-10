@@ -17,5 +17,9 @@ class ProductEntity(
         fun toDomain(entity: ProductEntity): Product {
             return Product(id = entity.id, stock = entity.stock)
         }
+
+        fun fromDomain(domain: Product): ProductEntity {
+            return ProductEntity(id = domain.id, stock = domain.stock)
+        }
     }
 }

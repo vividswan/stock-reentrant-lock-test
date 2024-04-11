@@ -19,7 +19,7 @@ class ProductService(private val productRepository: ProductRepository) {
         return ProductDto(0, 0)
     }
 
-    fun decreaseProductStock(productDto: ProductDto) {
-        // TODO: 인프라단 로직 등록 필요
+    fun decreaseProductStock(productDto: ProductDto): Unit {
+        productRepository.decreaseStock(productDto.id)
     }
 }

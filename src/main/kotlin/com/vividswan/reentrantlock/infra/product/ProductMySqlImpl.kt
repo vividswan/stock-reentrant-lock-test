@@ -20,4 +20,15 @@ class ProductMySqlImpl(private val jpaRepository: ProductMySqlJpaRepository) : P
 
         return ProductEntity.toDomain(productEntity)
     }
+
+    override fun decreaseStock(id: Long) {
+        val productEntity = jpaRepository.findById(id).orElseThrow {
+            EntityNotFoundException("Product with id $id not found!")
+        }
+        if (productEntity.stock <= 0) {
+            throw IllegalArgumentException("Product stock is zero!")
+        }
+        productEntity.stock--;
+        jpaRepository.save(productEntity)
+    }
 }

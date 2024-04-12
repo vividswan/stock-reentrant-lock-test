@@ -10,8 +10,9 @@ class ProductService(private val productRepository: ProductRepository) {
         return ProductDto.fromDomain(findProduct)
     }
 
-    fun createProduct() {
-        // TODO: 인프라단 로직 등록 필요
+    fun createProduct(): ProductDto {
+        val createdProduct = productRepository.createProduct()
+        return ProductDto.fromDomain(createdProduct)
     }
 
     fun updateProductStock(id: Long, stock: Int): ProductDto {

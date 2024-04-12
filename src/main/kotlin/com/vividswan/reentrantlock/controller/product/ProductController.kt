@@ -13,9 +13,9 @@ class ProductController(private val productService: ProductService) {
     }
 
     @PostMapping("/")
-    fun createProduct(): CommonResponseDto {
-        productService.createProduct()
-        return CommonResponseDto(isSuccess = true, message = "상품 등록 성공")
+    fun createProduct(): DataResponseDto<ProductDto> {
+        val createdProductDto = productService.createProduct()
+        return DataResponseDto(isSuccess = true, message = "상품 등록 성공", createdProductDto)
     }
 
     @PatchMapping("/{id}/{stock}")

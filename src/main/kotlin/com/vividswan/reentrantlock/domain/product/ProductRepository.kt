@@ -4,4 +4,5 @@ interface ProductRepository {
     fun findById(id: Long): Product
     fun save(domain: Product): Product
     fun decreaseStock(id: Long): Unit
+    fun createProduct(): Product
 }

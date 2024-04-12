@@ -10,7 +10,7 @@ import jakarta.persistence.Id
 class ProductEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long,
+    val id: Long?,
     var stock: Int = 0
 ) {
     companion object {

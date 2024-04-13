@@ -16,8 +16,10 @@ class ProductService(private val productRepository: ProductRepository) {
     }
 
     fun updateProductStock(id: Long, stock: Int): ProductDto {
-        // TODO: 인프라단 로직 등록 필요
-        return ProductDto(0, 0)
+        val findProduct = productRepository.findById(id);
+        findProduct.stock = stock
+        productRepository.save(findProduct)
+        return ProductDto.fromDomain(findProduct)
     }
 
     fun decreaseProductStock(productDto: ProductDto): Unit {

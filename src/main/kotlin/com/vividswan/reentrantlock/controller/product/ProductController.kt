@@ -26,7 +26,10 @@ class ProductController(private val productService: ProductService) {
 
     @PostMapping("/adjustments")
     fun decreaseProductStock(@RequestBody productDto: ProductDto): CommonResponseDto {
-        productService.decreaseProductStock(productDto)
+        if (productDto.id == null) {
+            throw IllegalArgumentException("invalid id field")
+        }
+        productService.decreaseProductStock(productDto.id)
         return CommonResponseDto(isSuccess = true, message = "재고 감소 성공")
     }
 }

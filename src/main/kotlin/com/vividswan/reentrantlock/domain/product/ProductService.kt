@@ -22,7 +22,7 @@ class ProductService(private val productRepository: ProductRepository) {
         return ProductDto.fromDomain(findProduct)
     }
 
-    fun decreaseProductStock(productDto: ProductDto): Unit {
-        productRepository.decreaseStock(productDto.id)
+    fun decreaseProductStock(id: Long): Unit {
+        productRepository.decreaseStock(id)
     }
 }

@@ -2,9 +2,12 @@ package com.vividswan.reentrantlock.domain.product
 
 import com.vividswan.reentrantlock.controller.product.ProductDto
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
+@Transactional
 @Service
 class ProductService(private val productRepository: ProductRepository) {
+    @Transactional(readOnly = true)
     fun getProduct(id: Long): ProductDto {
         val findProduct = productRepository.findById(id);
         return ProductDto.fromDomain(findProduct)

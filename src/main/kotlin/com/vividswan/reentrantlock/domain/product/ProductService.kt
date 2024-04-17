@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional
 class ProductService(private val productRepository: ProductRepository) {
     @Transactional(readOnly = true)
     fun getProduct(id: Long): ProductDto {
-        val findProduct = productRepository.findById(id);
+        val findProduct = productRepository.findById(id)
         return ProductDto.fromDomain(findProduct)
     }
 
@@ -19,13 +19,18 @@ class ProductService(private val productRepository: ProductRepository) {
     }
 
     fun updateProductStock(id: Long, stock: Int): ProductDto {
-        val findProduct = productRepository.findById(id);
+        val findProduct = productRepository.findById(id)
         findProduct.stock = stock
         productRepository.save(findProduct)
         return ProductDto.fromDomain(findProduct)
     }
 
     fun decreaseProductStock(id: Long): Unit {
-        productRepository.decreaseStock(id)
+        val findProduct = productRepository.findById(id)
+        if (findProduct.stock <= 0) {
+            throw IllegalArgumentException("Insufficient stock")
+        }
+        findProduct.stock -= 1
+        productRepository.save(findProduct)
     }
 }

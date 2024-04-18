@@ -20,17 +20,14 @@ class ProductService(private val productRepository: ProductRepository) {
 
     fun updateProductStock(id: Long, stock: Int): ProductDto {
         val findProduct = productRepository.findById(id)
-        findProduct.stock = stock
+        findProduct.updateStock(stock)
         productRepository.save(findProduct)
         return ProductDto.fromDomain(findProduct)
     }
 
-    fun decreaseProductStock(id: Long): Unit {
+    fun decreaseProductOneStock(id: Long): Unit {
         val findProduct = productRepository.findById(id)
-        if (findProduct.stock <= 0) {
-            throw IllegalArgumentException("Insufficient stock")
-        }
-        findProduct.stock -= 1
+        findProduct.decreaseOneStock()
         productRepository.save(findProduct)
     }
 }

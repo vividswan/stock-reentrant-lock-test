@@ -5,6 +5,7 @@ import org.mockito.Mockito
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
+import kotlin.concurrent.thread
 
 @SpringBootTest
 class ProductServiceTest {
@@ -33,6 +34,25 @@ class ProductServiceTest {
 
         // Repository의 save 메서드가 호출되었는지 확인
         Mockito.verify(productRepository).save(product)
+    }
+
+    @Test
+    fun `동시성_테스트_실패_코드`() {
+        val product = Product(id = 1L, stock = 10)
+        val numberOfThreads = 10  // 10개의 스레드를 사용하여 테스트
+
+        val threads = List(numberOfThreads) {
+            thread {
+                // 각 스레드가 재고를 1 감소
+                val newStock = product.stock - 1
+                Thread.sleep(10)  // 동시성 문제를 더 자주 발생시키기 위해 일부러 지연시킴
+                product.stock = newStock
+            }
+        }
+
+        threads.forEach { it.join() }  // 모든 스레드가 종료될 때까지 대기
+
+        assert(product.stock != 0)
     }
 }
 

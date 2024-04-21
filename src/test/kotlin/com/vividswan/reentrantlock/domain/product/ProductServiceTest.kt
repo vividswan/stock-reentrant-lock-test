@@ -43,10 +43,8 @@ class ProductServiceTest {
 
         val threads = List(numberOfThreads) {
             thread {
-                // 각 스레드가 재고를 1 감소
-                val newStock = product.stock - 1
                 Thread.sleep(10)  // 동시성 문제를 더 자주 발생시키기 위해 일부러 지연시킴
-                product.stock = newStock
+                product.decreaseOneStock()
             }
         }
 

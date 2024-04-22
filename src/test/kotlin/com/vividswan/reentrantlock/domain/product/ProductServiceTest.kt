@@ -50,7 +50,7 @@ class ProductServiceTest {
 
         threads.forEach { it.join() }  // 모든 스레드가 종료될 때까지 대기
 
-        assert(product.stock != 0)
+        assert(product.stock == 0)
     }
 }
 

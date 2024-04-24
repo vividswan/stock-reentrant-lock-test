@@ -17,7 +17,9 @@ class ProductServiceTest {
     private lateinit var productRepository: ProductRepository
 
     @Test
-    fun `test reduce stock`() {
+    fun `특정_값으로_재고_줄이기`() {
+
+        // given
         val productId = 1L
         val reduceAmount = 5
 
@@ -26,9 +28,11 @@ class ProductServiceTest {
         // Repository 호출 시 돌려줄 가짜 객체 설정
         Mockito.`when`(productRepository.findById(productId)).thenReturn(product)
 
+        // when
         // 메서드 실행
         productService.updateProductStock(productId, reduceAmount)
 
+        // then
         // 재고 감소 후 상태 확인
         assert(product.stock == 5)  // 10 - 5 = 5가 되어야 함
 
@@ -37,19 +41,22 @@ class ProductServiceTest {
     }
 
     @Test
-    fun `동시성_테스트_실패_코드`() {
+    fun `동시성_테스트_확인_코드`() {
+
+        // given
         val product = Product(id = 1L, stock = 10)
         val numberOfThreads = 10  // 10개의 스레드를 사용하여 테스트
 
+        // when
         val threads = List(numberOfThreads) {
             thread {
                 Thread.sleep(10)  // 동시성 문제를 더 자주 발생시키기 위해 일부러 지연시킴
                 product.decreaseOneStock()
             }
         }
-
         threads.forEach { it.join() }  // 모든 스레드가 종료될 때까지 대기
 
+        // then
         assert(product.stock == 0)
     }
 }

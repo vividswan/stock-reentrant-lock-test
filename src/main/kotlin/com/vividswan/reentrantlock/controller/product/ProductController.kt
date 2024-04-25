@@ -32,4 +32,10 @@ class ProductController(private val productService: ProductService) {
         productService.decreaseProductOneStock(productDto.id)
         return CommonResponseDto(isSuccess = true, message = "재고 감소 성공")
     }
+
+    @DeleteMapping("/{id}")
+    fun deleteProduct(@PathVariable id: Long): CommonResponseDto {
+        // TODO : 서비스 로직 생성
+        return CommonResponseDto(isSuccess = true, message = "상품 삭제 성공")
+    }
 }

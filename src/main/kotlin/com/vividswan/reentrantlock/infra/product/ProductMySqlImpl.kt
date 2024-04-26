@@ -25,4 +25,8 @@ class ProductMySqlImpl(private val jpaRepository: ProductMySqlJpaRepository) : P
         val savedProduct = jpaRepository.save(ProductEntity(id = null, stock = 0))
         return ProductEntity.toDomain(savedProduct)
     }
+
+    override fun deleteProduct(id: Long) {
+        jpaRepository.deleteById(id)
+    }
 }

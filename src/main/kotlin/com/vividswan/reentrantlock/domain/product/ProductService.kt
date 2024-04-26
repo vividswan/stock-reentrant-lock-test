@@ -30,4 +30,8 @@ class ProductService(private val productRepository: ProductRepository) {
         findProduct.decreaseOneStock()
         productRepository.save(findProduct)
     }
+
+    fun deleteProduct(id: Long): Unit {
+        productRepository.deleteProduct(id);
+    }
 }
